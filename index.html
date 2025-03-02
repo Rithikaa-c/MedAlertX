@@ -1,1 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedAlertX - Multi-Step Flow</title>
+    <style>
+        /* Import Google Font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
+        /* Reset Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Centering Layout */
+        body {
+            background-color: #205A43;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        /* Main Container */
+        .card {
+            width: 100%;
+            max-width: 350px;
+            background: #1B4D36;
+            padding: 30px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+            display: none; /* Initially hidden */
+        }
+
+        /* Show active screen */
+        .active {
+            display: block;
+        }
+
+        /* Logo */
+        .logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        /* Title */
+        h1, h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+        }
+
+        /* Subtitle */
+        .subtitle {
+            font-size: 15px;
+            color: #d5f5e3;
+            margin-top: 10px;
+        }
+
+        /* Button */
+        .btn {
+            display: block;
+            width: 80%;
+            background: #2E8B57;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            padding: 12px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            margin: 15px auto 0;
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background: #267146;
+        }
+
+        /* Language Selection & Role Selection Buttons */
+        .option-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            background: white;
+            color: #1B4D36;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 12px;
+            border: 2px solid #1B4D36;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: 0.3s;
+        }
+
+        .option-btn:hover {
+            background: #cce3d9;
+        }
+
+        /* Selected Language */
+        .selected {
+            background: #2E8B57;
+            color: white;
+        }
+
+        /* Input Fields */
+        .input-box {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 20px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .input-box input {
+            border: none;
+            outline: none;
+            flex: 1;
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        /* Forgot Password */
+        .forgot-password {
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* OR Text */
+        .or-text {
+            color: white;
+            margin: 10px 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Welcome Screen -->
+    <div class="card active" id="welcome-screen">
+        <img src="https://assets.onecompiler.app/43ak4z23v/43ak4jqrc/Screenshot_2025-02-20_204225-removebg-preview%20(1).png" alt="MedAlertX Logo" class="logo">
+        <h1>MedAlertX</h1>
+        <p class="subtitle">Your Smart Medication Assistant!!!</p>
+        <button class="btn" onclick="showScreen('language-screen')">Get Started</button>
+    </div>
+
+    <!-- Language Selection Screen -->
+    <div class="card" id="language-screen">
+        <h2>Select Language</h2>
+        <button class="option-btn" onclick="selectLanguage(this)">English</button>
+        <button class="option-btn" onclick="selectLanguage(this)">Tamil</button>
+        <button class="option-btn" onclick="selectLanguage(this)">Hindi</button>
+        <button class="option-btn" onclick="selectLanguage(this)">Telugu</button>
+        <button class="option-btn" onclick="selectLanguage(this)">Malayalam</button>
+        <button class="btn" onclick="confirmLanguage()">Enter</button>
+    </div>
+
+    <!-- Role Selection Screen -->
+    <div class="card" id="role-screen">
+        <h1>Select Your Role</h1>
+        <button class="option-btn" onclick="showScreen('login-screen')">Patient</button>
+        <button class="option-btn">Caregiver</button>
+        <button class="option-btn">Doctor</button>
+        <button class="btn" onclick="showScreen('language-screen')">Back</button>
+    </div>
+
+    <!-- Login Screen -->
+    <div class="card" id="login-screen">
+        <img src="https://assets.onecompiler.app/439gybt3y/43ak2zd55/logo%201.png" alt="Logo" class="logo">
+        <h2>Login</h2>
+
+        <div class="input-box">
+            <input type="text" placeholder="Email or Phone">
+        </div>
+
+        <div class="input-box">
+            <input type="password" placeholder="Password">
+        </div>
+
+        <p class="forgot-password">Forgot Password?</p>
+
+        <button class="btn">Login</button>
+
+        <p class="or-text">or</p>
+
+        <button class="btn">Create an Account</button>
+
+        <button class="btn" onclick="showScreen('role-screen')">Back</button>
+    </div>
+
+    <script>
+        // Function to show a specific screen
+        function showScreen(screenId) {
+            // Hide all screens
+            document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
+            // Show the selected screen
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        // Function to handle language selection
+        function selectLanguage(button) {
+            // Remove selected class from all buttons
+            document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
+            // Add selected class to clicked button
+            button.classList.add('selected');
+        }
+
+        // Function to confirm language selection
+        function confirmLanguage() {
+            const selectedLang = document.querySelector('.option-btn.selected');
+            if (selectedLang) {
+                showScreen('role-screen');
+            } else {
+                alert("Please select a language.");
+            }
+        }
+    </script>
+
+</body>
+</html>
