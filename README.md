@@ -79,13 +79,5 @@ How to Use
 
 
 
-Contributing
 
-We welcome contributions! Feel free to fork this repository and submit a pull request.
-
-
-
-License
-
-This project is licensed under the MIT License.
 
